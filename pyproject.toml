@@ -1,0 +1,83 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pushover-cli"
+version = "1.0.0"
+authors = [
+    {name = "Pushover CLI Team"},
+]
+description = "コマンドラインからPushover通知を送信するシンプルなツール"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.7"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Communications",
+    "Topic :: System :: Monitoring",
+    "Topic :: System :: Networking :: Monitoring",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Utilities",
+]
+
+keywords = ["pushover", "notification", "cli", "command-line", "alert", "monitoring"]
+
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+]
+
+[project.scripts]
+pushover = "pushover_cli.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/your-username/pushover-cli"
+"Bug Reports" = "https://github.com/your-username/pushover-cli/issues"
+"Source" = "https://github.com/your-username/pushover-cli"
+"Documentation" = "https://github.com/your-username/pushover-cli#readme"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pushover_cli*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py37']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = "-v --tb=short" 
