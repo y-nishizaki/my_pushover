@@ -1,16 +1,40 @@
 # Pushover CLI
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
+
 PushoverサービスでCLIから通知を送信するシンプルなツールです。
 
-## 機能
+## 📋 目次
 
-- コマンドラインから簡単にPushover通知を送信
-- **🆕 永続設定**: 一度設定すれば自動的に環境変数を使用
-- 環境変数や設定ファイルからの認証情報読み込み
-- 通知の優先度、タイトル、URL、音声などのカスタマイズ
-- 複数の設定方法をサポート
+- [機能](#機能)
+- [セットアップ](#セットアップ)
+  - [1. Pushoverアカウントの準備](#1-pushoverアカウントの準備)
+  - [2. インストール](#2-インストール)
+  - [3. 設定](#3-設定)
+- [使用方法](#使用方法)
+  - [基本的な使用例](#基本的な使用例)
+  - [設定管理コマンド](#設定管理コマンド)
+  - [コマンドラインオプション](#コマンドラインオプション)
+  - [優先度について](#優先度について)
+- [実用的な使用例](#実用的な使用例)
+- [プロジェクト構成](#プロジェクト構成)
+- [トラブルシューティング](#トラブルシューティング)
+- [新機能ハイライト](#新機能ハイライト)
+- [ライセンス](#ライセンス)
+- [貢献](#貢献)
 
-## セットアップ
+## ✨ 機能
+
+- ✅ コマンドラインから簡単にPushover通知を送信
+- 🆕 **永続設定**: 一度設定すれば自動的に環境変数を使用
+- 🔧 環境変数や設定ファイルからの認証情報読み込み
+- 🎛️ 通知の優先度、タイトル、URL、音声などのカスタマイズ
+- 📝 複数の設定方法をサポート
+- 🐍 Python 3.7以降対応
+- 🚀 軽量で高速
+
+## 🚀 セットアップ
 
 ### 1. Pushoverアカウントの準備
 
@@ -20,25 +44,22 @@ PushoverサービスでCLIから通知を送信するシンプルなツールで
 
 ### 2. インストール
 
-#### pip installで簡単インストール（推奨）
+#### 📦 Git経由でインストール（推奨）
 
 ```bash
-# PyPIからインストール（将来的に利用可能）
-pip install pushover-cli
+# 最新版をGitHubから直接インストール
+pip install git+https://github.com/y-nishizaki/my_pushover.git
 
-# または、開発版をGitHubから直接インストール
-pip install git+https://github.com/your-username/pushover-cli.git
-
-# ローカル開発版をインストール
-git clone <このリポジトリ>
+# または、ローカル開発版をインストール
+git clone https://github.com/y-nishizaki/my_pushover.git
 cd my_pushover
 pip install -e .
 ```
 
-#### 従来の方法
+#### 🛠️ 従来の方法（開発版）
 
 ```bash
-git clone <このリポジトリ>
+git clone https://github.com/y-nishizaki/my_pushover.git
 cd my_pushover
 chmod +x pushover_cli.py
 ```
@@ -85,7 +106,7 @@ PUSHOVER_TOKEN=your_app_token
 PUSHOVER_USER=your_user_key
 ```
 
-## 使用方法
+## 📖 使用方法
 
 ### 基本的な使用例
 
@@ -163,13 +184,15 @@ pushover config --help
 
 ### 優先度について
 
-- **-2 (最低)**: 通知音なし、バナー表示なし
-- **-1 (低)**: 静かな通知音
-- **0 (通常)**: デフォルトの通知音
-- **1 (高)**: 重要な通知音でバイパス
-- **2 (緊急)**: 確認が必要（30秒ごとに再通知）
+| 優先度 | 説明 | 動作 |
+|--------|------|------|
+| **-2** | 最低 | 通知音なし、バナー表示なし |
+| **-1** | 低 | 静かな通知音 |
+| **0** | 通常 | デフォルトの通知音 |
+| **1** | 高 | 重要な通知音でバイパス |
+| **2** | 緊急 | 確認が必要（30秒ごとに再通知） |
 
-## 実用的な使用例
+## 💡 実用的な使用例
 
 ### システム監視
 ```bash
@@ -191,9 +214,29 @@ fi
 
 # 長時間実行タスクの完了通知
 python long_running_task.py; pushover -m "長時間タスクが完了しました" --title "タスク完了"
+
+# CI/CDパイプライン通知
+pushover -m "ビルドが完了しました" --title "CI/CD" --url "${BUILD_URL}" --url-title "ビルド結果を確認"
 ```
 
-## トラブルシューティング
+## 📁 プロジェクト構成
+
+```
+my_pushover/
+├── pushover_cli/           # メインパッケージ
+│   ├── __init__.py
+│   └── cli.py
+├── tests/                  # テストファイル
+├── examples/               # 使用例
+├── README.md              # このファイル
+├── setup.py               # セットアップスクリプト
+├── pyproject.toml         # プロジェクト設定
+├── requirements.txt       # 依存関係
+├── LICENSE                # ライセンス
+└── pushover_cli.py        # スタンドアロン版
+```
+
+## 🔧 トラブルシューティング
 
 ### よくある問題
 
@@ -223,20 +266,36 @@ python -u pushover_cli.py -m "テストメッセージ"
 ## 🆕 新機能ハイライト
 
 ### 永続設定機能
-- **自動シェル検出**: bash, zsh, fish をサポート
-- **設定ファイル管理**: `.bashrc`, `.zshrc` などに自動書き込み
-- **安全な設定更新**: 既存設定の上書きと削除に対応
-- **設定テスト**: 実際に通知を送信してテスト
+- 🔄 **自動シェル検出**: bash, zsh, fish をサポート
+- 📝 **設定ファイル管理**: `.bashrc`, `.zshrc` などに自動書き込み
+- 🔒 **安全な設定更新**: 既存設定の上書きと削除に対応
+- ✅ **設定テスト**: 実際に通知を送信してテスト
 
 ### 使いやすさの向上
-- **設定の優先順位**: 永続設定 > コマンドライン > 環境変数 > 設定ファイル
-- **分かりやすいエラーメッセージ**: 設定方法を具体的に案内
-- **サブコマンド対応**: `pushover config` で設定管理
+- 📊 **設定の優先順位**: 永続設定 > コマンドライン > 環境変数 > 設定ファイル
+- 💬 **分かりやすいエラーメッセージ**: 設定方法を具体的に案内
+- 🛠️ **サブコマンド対応**: `pushover config` で設定管理
 
-## ライセンス
+## 📄 ライセンス
 
-MIT License - 自由に使用、修正、配布可能です。
+[MIT License](LICENSE) - 自由に使用、修正、配布可能です。
 
-## 貢献
+## 🤝 貢献
 
-バグ報告や機能リクエストはGitHubのIssueでお知らせください。 
+プロジェクトへの貢献を歓迎します！
+
+- 🐛 バグ報告: [Issues](https://github.com/y-nishizaki/my_pushover/issues)
+- 💡 機能リクエスト: [Issues](https://github.com/y-nishizaki/my_pushover/issues)
+- 🔀 プルリクエスト: [Pull Requests](https://github.com/y-nishizaki/my_pushover/pulls)
+
+### 開発環境のセットアップ
+
+```bash
+git clone https://github.com/y-nishizaki/my_pushover.git
+cd my_pushover
+pip install -e ".[dev]"
+```
+
+---
+
+⭐ このプロジェクトが役に立った場合は、GitHubでスターをお願いします！
