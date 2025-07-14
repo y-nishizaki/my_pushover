@@ -44,7 +44,25 @@ PushoverサービスでCLIから通知を送信するシンプルなツールで
 
 ### 2. インストール
 
-#### 📦 Git経由でインストール（推奨）
+#### 📦 pipxでインストール（推奨）
+
+[pipx](https://pypa.github.io/pipx/)を使用すると、分離された環境にCLIツールをインストールできます：
+
+```bash
+# pipxがインストールされていない場合
+pip install --user pipx
+pipx ensurepath
+
+# 最新版をGitHubから直接インストール
+pipx install git+https://github.com/y-nishizaki/my_pushover.git
+
+# または、ローカル開発版をインストール
+git clone https://github.com/y-nishizaki/my_pushover.git
+cd my_pushover
+pipx install -e .
+```
+
+#### 🐍 pipでインストール（従来の方法）
 
 ```bash
 # 最新版をGitHubから直接インストール
@@ -56,7 +74,7 @@ cd my_pushover
 pip install -e .
 ```
 
-#### 🛠️ 従来の方法（開発版）
+#### 🛠️ スタンドアロン版（開発版）
 
 ```bash
 git clone https://github.com/y-nishizaki/my_pushover.git
@@ -294,6 +312,9 @@ python -u pushover_cli.py -m "テストメッセージ"
 git clone https://github.com/y-nishizaki/my_pushover.git
 cd my_pushover
 pip install -e ".[dev]"
+
+# pipxで開発版をインストールする場合
+pipx install -e ".[dev]"
 ```
 
 ---
